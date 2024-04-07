@@ -1,11 +1,13 @@
 class Vacancy:
     """класс для работы с вакансией"""
-    def __init__(self, name: str, url: str, salary: str, requirements: str | None,
-                 responsibility: str | None, area: str | None) -> None:
+    def __init__(self, name: str, url: str, salary: str, salary_min: int, salary_max: int,
+                 requirements: str | None, responsibility: str | None, area: str | None) -> None:
         """Инициализатор класса"""
         self._name = name
         self._url = url
         self._salary = salary
+        self._salary_min = salary_min
+        self._salary_max = salary_max
         self._requirements = requirements
         self._responsibility = responsibility
         self._area = area
@@ -24,6 +26,16 @@ class Vacancy:
     def salary(self) -> str:
         """Возвращает данные о зарплате"""
         return self._salary
+
+    @property
+    def salary_min(self) -> int:
+        """Возвращает данные о минимальной зарплате"""
+        return self._salary_min
+
+    @property
+    def salary_max(self) -> int:
+        """Возвращает данные о максимальной зарплате"""
+        return self._salary_max
 
     @property
     def requirements(self) -> str | None:
