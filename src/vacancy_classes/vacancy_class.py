@@ -1,9 +1,9 @@
 class Vacancy:
     """класс для работы с вакансией"""
-    def __init__(self, title: str, url: str, salary: int, requirements: str | None,
+    def __init__(self, name: str, url: str, salary: str, requirements: str | None,
                  responsibility: str | None, area: str | None) -> None:
         """Инициализатор класса"""
-        self._title = title
+        self._name = name
         self._url = url
         self._salary = salary
         self._requirements = requirements
@@ -11,9 +11,9 @@ class Vacancy:
         self._area = area
 
     @property
-    def title(self) -> str:
+    def name(self) -> str:
         """Возвращает название вакансии"""
-        return self._title
+        return self._name
 
     @property
     def url(self) -> str:
@@ -21,7 +21,7 @@ class Vacancy:
         return self._url
 
     @property
-    def salary(self) -> int:
+    def salary(self) -> str:
         """Возвращает данные о зарплате"""
         return self._salary
 
@@ -36,6 +36,21 @@ class Vacancy:
         return self._responsibility
 
     @property
-    def location(self) -> str | None:
+    def area(self) -> str | None:
         """Возвращает локацию вакансии"""
-        return self._location
+        return self._area
+
+    @classmethod
+    def cast_to_object_list(cls, raw_vacancies):
+        """Преобразование набора данных в список объектов"""
+
+        vacancies_list = []
+        for rv in raw_vacancies:
+            attributes = [rv.get('name'),
+                          rv.get('url'),
+                          f'{rv.get("salary", {}).get("from")} - {rv.get("salary", {}).get("to")}',
+                          rv.get('snippet', {}).get('requirement'),
+                          rv.get('snippet', {}).get('responsibility'),
+                          rv.get('area', {}).get('name')]
+            vacancy = Vacancy(*attributes)
+            vacancies_list.append(vacancy)
