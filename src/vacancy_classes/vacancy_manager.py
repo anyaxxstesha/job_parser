@@ -21,7 +21,7 @@ class VacancyManager:
     def filter_vacancy_by_keywords(vacancy: Vacancy, filter_words: str) -> bool:
         """Фильтрация по ключевому слову для одной вакансии"""
         for attribute in vacancy.__dict__.values():
-            if filter_words in attribute:
+            if filter_words in str(attribute):
                 return True
         return False
 

@@ -58,11 +58,26 @@ class Vacancy:
 
         vacancies_list = []
         for rv in raw_vacancies:
+            salary = rv.get('salary', {}) or {}
             attributes = [rv.get('name'),
                           rv.get('url'),
-                          f'{rv.get("salary", {}).get("from")} - {rv.get("salary", {}).get("to")}',
+                          f'{salary.get("from")} - {salary.get("to")}',
+                          salary.get("from", 0) or 0,
+                          salary.get("to", 0) or 0,
                           rv.get('snippet', {}).get('requirement'),
                           rv.get('snippet', {}).get('responsibility'),
                           rv.get('area', {}).get('name')]
             vacancy = Vacancy(*attributes)
             vacancies_list.append(vacancy)
+
+        return vacancies_list
+
+    def __str__(self):
+        """Человекочитаемое отображение вакансии"""
+        lst_out = ["<Объект вакансии>:"]
+
+        for k, v in self.__dict__.items():
+            lst_out.append(f"{k}: {v}")
+
+        str_out = "\n".join(lst_out)
+        return str_out
